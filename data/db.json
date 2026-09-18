@@ -1,0 +1,448 @@
+{
+  "profile": {
+    "name": "GK Badhon",
+    "role": "Professional Goalkeeper",
+    "tagline": "The Last Line of Defense",
+    "position": "Goalkeeper",
+    "preferredFoot": "Right",
+    "experience": "7+ Years Competitive",
+    "location": "Dhaka, Bangladesh",
+    "age": 24,
+    "height": "6 ft 1 in (185 cm)",
+    "matchAvailability": "Available",
+    "rating": 4.9,
+    "totalReviews": 28,
+    "matchesPlayed": 650,
+    "tournamentsPlayed": 129,
+    "saves": 180,
+    "cleanSheets": 115,
+    "savePercentage": 89.2,
+    "penaltySaveRate": "46%",
+    "bio": "High-impact tournament goalkeeper with 129 tournaments played, 650 matches, and 180 decisive match saves. Renowned for fearless penalty stops, explosive 1v1 reflexes, and commanding box leadership across Dhaka and nationwide competitions.",
+    "avatarUrl": "https://i.postimg.cc/kMf9mTKF/986daf46-d077-4bc4-8cf1-0558fb07fe47.png",
+    "heroImageUrl": "https://i.postimg.cc/ncMhCy1Q/4e4e9dc4-d3d3-4ca6-8f9e-63a4e6b3dda6.png",
+    "tiktokUrl": "https://www.tiktok.com/@mr.bandhon.das",
+    "instagramUrl": "https://www.instagram.com/mr.badhon__das/"
+  },
+  "availability": [
+    {
+      "date": "2026-09-17",
+      "status": "available",
+      "note": "Ready for evening fixture",
+      "timeSlot": "Afternoon & Evening"
+    },
+    {
+      "date": "2026-09-18",
+      "status": "available",
+      "note": "Open for match booking",
+      "timeSlot": "Anytime"
+    },
+    {
+      "date": "2026-09-19",
+      "status": "pending",
+      "note": "City Cup Semifinal hold",
+      "timeSlot": "4:00 PM - 7:00 PM"
+    },
+    {
+      "date": "2026-09-20",
+      "status": "booked",
+      "note": "Bashundhara Turf League",
+      "timeSlot": "7:00 PM - 9:00 PM"
+    },
+    {
+      "date": "2026-09-21",
+      "status": "available",
+      "note": "Tournament day booking open",
+      "timeSlot": "Full Day"
+    },
+    {
+      "date": "2026-09-22",
+      "status": "available",
+      "note": "Training & friendly matches",
+      "timeSlot": "Morning & Evening"
+    },
+    {
+      "date": "2026-09-23",
+      "status": "booked",
+      "note": "Corporate Championship",
+      "timeSlot": "2:00 PM - 6:00 PM"
+    },
+    {
+      "date": "2026-09-24",
+      "status": "available",
+      "note": "Available for weekend cup",
+      "timeSlot": "Full Day"
+    },
+    {
+      "date": "2026-09-26",
+      "status": "pending",
+      "note": "Reviewing invitation",
+      "timeSlot": "5:00 PM - 7:00 PM"
+    },
+    {
+      "date": "2026-09-27",
+      "status": "available",
+      "note": "Open",
+      "timeSlot": "Anytime"
+    },
+    {
+      "date": "2026-09-29",
+      "status": "available",
+      "note": "Open",
+      "timeSlot": "Evening"
+    },
+    {
+      "date": "2026-10-01",
+      "status": "booked",
+      "note": "Quarter Final Derby",
+      "timeSlot": "3:30 PM - 6:00 PM"
+    }
+  ],
+  "pricing": [
+    {
+      "id": "price-1",
+      "categoryKey": "match",
+      "title": "Match Booking",
+      "priceAmount": 2500,
+      "currency": "৳",
+      "isCustomPrice": false,
+      "unit": "per single match",
+      "popular": false,
+      "description": "Ideal for competitive league games, club friendlies, and weekend turf matches.",
+      "features": [
+        "Full match appearance (up to 90 mins)",
+        "Pre-match warmup & tactical briefing",
+        "Own top-tier match gloves & keeper kit",
+        "Post-match penalty shootout readiness",
+        "Defense line leadership & coordination"
+      ]
+    },
+    {
+      "id": "price-2",
+      "categoryKey": "tournament",
+      "title": "Tournament Booking",
+      "priceAmount": 8500,
+      "currency": "৳",
+      "isCustomPrice": false,
+      "unit": "per full tournament day",
+      "popular": true,
+      "description": "Dedicated goalkeeper availability across group stages, knockouts, and grand finals.",
+      "features": [
+        "Unlimited matches across tournament day",
+        "Dedicated stamina & rapid recovery",
+        "Clutch penalty shootout specialist",
+        "On-field defense synchronization",
+        "Full day availability guarantee"
+      ]
+    },
+    {
+      "id": "price-3",
+      "categoryKey": "training",
+      "title": "Training Session",
+      "priceAmount": 1800,
+      "currency": "৳",
+      "isCustomPrice": false,
+      "unit": "per 2-hour session",
+      "popular": false,
+      "description": "High-intensity goalkeeper training or team defensive tactical drills.",
+      "features": [
+        "2 hours focused training session",
+        "Shot-stopping & reflex drills for team strikers",
+        "Defensive set-piece alignment guidance",
+        "Constructive goalkeeper technique feedback"
+      ]
+    },
+    {
+      "id": "price-4",
+      "categoryKey": "custom",
+      "title": "Custom Event",
+      "priceAmount": null,
+      "currency": "৳",
+      "isCustomPrice": true,
+      "unit": "custom tailored package",
+      "popular": false,
+      "description": "Multi-day championships, outstation tours, corporate sports days, or academy camps.",
+      "features": [
+        "Multi-day national & district travel",
+        "Custom appearance contracts",
+        "Corporate tournament guest keeper",
+        "Tailored scheduling & terms"
+      ]
+    }
+  ],
+  "bookings": [
+    {
+      "id": "book-101",
+      "trackingCode": "GKB-7821",
+      "gkId": "badhon-01",
+      "gkName": "GK Badhon",
+      "clientName": "Tahsin Ahmed",
+      "phone": "+880 1819-234567",
+      "email": "tahsin.fc@gmail.com",
+      "teamName": "Dhanmondi Strikers FC",
+      "matchType": "Tournament Booking",
+      "matchDate": "2026-09-23",
+      "matchTime": "14:00",
+      "location": "Abahani Field, Dhanmondi, Dhaka",
+      "numberOfMatches": 3,
+      "expectedDuration": "4 Hours",
+      "additionalMessage": "Playing in the Dhaka Metro Winter Knockout. Need a solid commander in the box.",
+      "status": "CONFIRMED",
+      "createdAt": "2026-09-14T16:26:44.751Z",
+      "updatedAt": "2026-09-15T16:26:44.751Z",
+      "adminNotes": "Confirmed after deposit. Kit coordinated: Black/Yellow jersey.",
+      "priceQuote": 8500
+    },
+    {
+      "id": "book-102",
+      "trackingCode": "GKB-9452",
+      "gkId": "badhon-01",
+      "gkName": "GK Badhon",
+      "clientName": "Rashidul Karim",
+      "phone": "+880 1711-892341",
+      "email": "rashid.united@outlook.com",
+      "teamName": "Banani United",
+      "matchType": "Match Booking",
+      "matchDate": "2026-09-19",
+      "matchTime": "16:30",
+      "location": "Jaff Turf, Bashundhara R/A",
+      "numberOfMatches": 1,
+      "expectedDuration": "90 Minutes",
+      "additionalMessage": "Championship qualifier vs Uttara FC.",
+      "status": "UNDER REVIEW",
+      "createdAt": "2026-09-16T16:26:44.751Z",
+      "updatedAt": "2026-09-16T16:26:44.751Z",
+      "adminNotes": "Checking schedule clash with morning training.",
+      "priceQuote": 2500
+    },
+    {
+      "id": "book-103",
+      "trackingCode": "GKB-3180",
+      "gkId": "badhon-01",
+      "gkName": "GK Badhon",
+      "clientName": "Farhan Hossain",
+      "phone": "+880 1922-445566",
+      "email": "farhan@apextech.io",
+      "teamName": "Apex Tech FC",
+      "matchType": "Match Booking",
+      "matchDate": "2026-09-18",
+      "matchTime": "19:00",
+      "location": "Velocity Arena, Mirpur",
+      "numberOfMatches": 1,
+      "expectedDuration": "60 Minutes Turf",
+      "additionalMessage": "Corporate League Quarter-final clash.",
+      "status": "REQUESTED",
+      "createdAt": "2026-09-17T12:26:44.751Z",
+      "updatedAt": "2026-09-17T12:26:44.751Z",
+      "adminNotes": "New request from corporate manager.",
+      "priceQuote": 2500
+    },
+    {
+      "id": "book-104",
+      "trackingCode": "GKB-6029",
+      "gkId": "badhon-01",
+      "gkName": "GK Badhon",
+      "clientName": "Zubair Rahman",
+      "phone": "+880 1688-990011",
+      "email": "zubair.r@gmail.com",
+      "teamName": "Lalbagh Warriors",
+      "matchType": "Match Booking",
+      "matchDate": "2026-09-13",
+      "matchTime": "16:00",
+      "location": "Old Dhaka Stadium",
+      "numberOfMatches": 1,
+      "expectedDuration": "90 Minutes",
+      "additionalMessage": "Divisional friendly match.",
+      "status": "COMPLETED",
+      "createdAt": "2026-09-09T16:26:44.751Z",
+      "updatedAt": "2026-09-13T16:26:44.751Z",
+      "adminNotes": "Clean sheet maintained! 2-0 victory for Lalbagh.",
+      "priceQuote": 2500
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "gkId": "badhon-01",
+      "clientName": "Captain Sajjad",
+      "teamName": "Gulshan Kings FC",
+      "rating": 5,
+      "review": "Badhon saved two penalties in the shootout to win us the trophy! Outstanding reflexes and commanded the box with incredible vocal authority. Worth every single taka.",
+      "matchDate": "November 2025",
+      "matchType": "Tournament Final",
+      "status": "approved",
+      "createdAt": "2026-09-03T16:26:44.751Z"
+    },
+    {
+      "id": "rev-2",
+      "gkId": "badhon-01",
+      "clientName": "Coach Arifuzzaman",
+      "teamName": "Uttara Rising Stars",
+      "rating": 5,
+      "review": "Clean sheet in a high pressure semifinal. His distribution from the back sparked our counter-attacks. Extremely professional, punctual, and disciplined.",
+      "matchDate": "December 2025",
+      "matchType": "League Semifinal",
+      "status": "approved",
+      "createdAt": "2026-09-07T16:26:44.751Z"
+    },
+    {
+      "id": "rev-3",
+      "gkId": "badhon-01",
+      "clientName": "Imran Chowdhury",
+      "teamName": "FinTech Titans",
+      "rating": 5,
+      "review": "Hired Badhon for our inter-company corporate tournament. He was a brick wall between the posts. The opponents could not break through. We booked him again immediately for next month!",
+      "matchDate": "January 2026",
+      "matchType": "Corporate Cup",
+      "status": "approved",
+      "createdAt": "2026-09-12T16:26:44.751Z"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1",
+      "type": "photo",
+      "category": "Saves",
+      "url": "/src/assets/images/badhon_goalkeeper_hero_1789662074857.jpg",
+      "title": "Flying Top-Corner Finger-tip Save",
+      "description": "Decisive 89th minute save preserving a 1-0 clean sheet in the Dhaka City League.",
+      "date": "Recent Match"
+    },
+    {
+      "id": "gal-2",
+      "type": "photo",
+      "category": "Match Moments",
+      "url": "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80",
+      "title": "Organizing The Defensive Wall",
+      "description": "Directing the backline ahead of a dangerous free kick outside the penalty box.",
+      "date": "League Match"
+    },
+    {
+      "id": "gal-3",
+      "type": "photo",
+      "category": "Tournaments",
+      "url": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80",
+      "title": "Championship Trophy Celebration",
+      "description": "Awarded Best Goalkeeper of the Tournament after conceding only 1 goal across 5 matches.",
+      "date": "Winter Championship"
+    },
+    {
+      "id": "gal-4",
+      "type": "photo",
+      "category": "Training",
+      "url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
+      "title": "High-Intensity Reflex Drills",
+      "description": "Speed ladder and reaction ball training sessions to sharpen diving agility.",
+      "date": "Academy Ground"
+    },
+    {
+      "id": "gal-5",
+      "type": "photo",
+      "category": "Saves",
+      "url": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80",
+      "title": "1v1 Breakthrough Block",
+      "description": "Smothering the attacker's breakaway angle with explosive ground coverage.",
+      "date": "Knockout Derby"
+    },
+    {
+      "id": "gal-6",
+      "type": "photo",
+      "category": "Match Moments",
+      "url": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=80",
+      "title": "Aerial High Catch Command",
+      "description": "Rising above opposing attackers on corner kicks to claim the ball securely.",
+      "date": "Quarter Final"
+    }
+  ],
+  "goalkeepers": [
+    {
+      "id": "badhon-01",
+      "name": "GK Badhon",
+      "position": "Primary Goalkeeper",
+      "location": "Dhaka (All Zones & Nationwide)",
+      "availability": "Available",
+      "experience": "7+ Years Competitive",
+      "rating": 4.9,
+      "reviewsCount": 28,
+      "startingPrice": 2500,
+      "currency": "৳",
+      "avatarUrl": "https://i.postimg.cc/kMf9mTKF/986daf46-d077-4bc4-8cf1-0558fb07fe47.png",
+      "cleanSheets": 115,
+      "matchesPlayed": 650,
+      "tournamentsPlayed": 129,
+      "saves": 180,
+      "preferredFoot": "Right",
+      "height": "6 ft 1 in",
+      "bio": "Top rated tournament specialist with 129 tournaments, 650 matches, and 180 decisive match saves.",
+      "isPrimary": true
+    },
+    {
+      "id": "gk-02",
+      "name": "Shahriar Nabil",
+      "position": "Goalkeeper (Understudy / Reserve)",
+      "location": "Mirpur & Uttara, Dhaka",
+      "availability": "Available",
+      "experience": "4 Years",
+      "rating": 4.7,
+      "reviewsCount": 14,
+      "startingPrice": 2000,
+      "currency": "৳",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+      "cleanSheets": 22,
+      "matchesPlayed": 64,
+      "preferredFoot": "Right",
+      "height": "6 ft 0 in",
+      "bio": "Agile young shot-stopper specializing in 7-a-side and 11-a-side weekend turf leagues.",
+      "isPrimary": false
+    },
+    {
+      "id": "gk-03",
+      "name": "Tanvir Hasan",
+      "position": "Veteran Goalkeeper",
+      "location": "Chittagong & Dhaka",
+      "availability": "Available",
+      "experience": "9 Years",
+      "rating": 4.8,
+      "reviewsCount": 19,
+      "startingPrice": 2800,
+      "currency": "৳",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+      "cleanSheets": 71,
+      "matchesPlayed": 185,
+      "preferredFoot": "Left",
+      "height": "6 ft 2 in",
+      "bio": "Commanding presence with exceptional long-range kicking and professional club experience.",
+      "isPrimary": false
+    }
+  ],
+  "contact": {
+    "phone": "+880 1712-345678",
+    "whatsapp": "+880 1712-345678",
+    "email": "booking@gkbadhon.com",
+    "location": "Dhaka, Bangladesh (Available for national & district travel)",
+    "responseNotice": "Typically responds within 1-2 hours for match queries.",
+    "emergencyNotice": "For same-day emergency keeper replacements, call or WhatsApp directly.",
+    "tiktokUrl": "https://www.tiktok.com/@mr.bandhon.das",
+    "instagramUrl": "https://www.instagram.com/mr.badhon__das/"
+  },
+  "notifications": [
+    {
+      "id": "notif-1",
+      "title": "New Booking Request",
+      "message": "Farhan Hossain requested a Match Booking for Apex Tech FC.",
+      "type": "booking",
+      "read": false,
+      "createdAt": "2026-09-17T12:26:44.751Z",
+      "relatedId": "book-103"
+    },
+    {
+      "id": "notif-2",
+      "title": "Booking Under Review",
+      "message": "Banani United request needs confirmation for next match.",
+      "type": "booking",
+      "read": true,
+      "createdAt": "2026-09-16T16:26:44.751Z",
+      "relatedId": "book-102"
+    }
+  ]
+}

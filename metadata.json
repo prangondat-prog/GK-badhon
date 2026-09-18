@@ -1,0 +1,6 @@
+{
+  "name": "GK Badhon - Goalkeeper Hiring Platform",
+  "description": "Professional football goalkeeper hiring platform for Badhon. Check match availability, book for tournaments, inspect stats, reviews, and explore goalkeepers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
