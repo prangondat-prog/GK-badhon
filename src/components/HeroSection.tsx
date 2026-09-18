@@ -17,7 +17,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   // Use the original high-quality GK Badhon goalkeeper banner image as requested
   const bannerImage = profile?.heroImageUrl || 'https://i.postimg.cc/ncMhCy1Q/4e4e9dc4-d3d3-4ca6-8f9e-63a4e6b3dda6.png';
 
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [videoEnded, setVideoEnded] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const matches = profile?.matchesPlayed || 650;
@@ -25,16 +27,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const saves = profile?.saves || 180;
   const rating = profile?.rating || 4.9;
 
+  // Fetch the latest unexpired direct MP4 video source URL on component mount
+  useEffect(() => {
+    fetch('/api/streamable-video?json=true')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to resolve video URL');
+        return res.json();
+      })
+      .then((data) => {
+        if (data && data.url) {
+          setVideoSrc(data.url);
+        } else {
+          setVideoFailed(true);
+        }
+      })
+      .catch((err) => {
+        console.error('Video resolve error:', err);
+        setVideoFailed(true);
+      });
+  }, []);
+
   // Cinematic looping mechanism: Video ends -> 7s Image banner -> Video restarts
   useEffect(() => {
     let timeoutId: any;
 
-    if (videoEnded) {
+    if (videoEnded && !videoFailed && videoSrc) {
       timeoutId = setTimeout(() => {
         setVideoEnded(false);
         if (videoRef.current) {
           videoRef.current.currentTime = 0;
-          videoRef.current.play().catch((err) => console.log('Video play interrupted:', err));
+          videoRef.current.play().catch((err) => {
+            console.log('Video play interrupted:', err);
+            setVideoFailed(true);
+          });
         }
       }, 7000); // exactly 7 seconds
     }
@@ -44,34 +69,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         clearTimeout(timeoutId);
       }
     };
-  }, [videoEnded]);
+  }, [videoEnded, videoFailed, videoSrc]);
 
   return (
     <section id="hero" className="relative overflow-hidden bg-neutral-950 text-white min-h-[520px] sm:min-h-[620px] lg:min-h-[750px] flex flex-col justify-end pb-4">
       
-      {/* Background Media Container */}
+      {/* Background Media Container with Fail-safe layering */}
       <div className="absolute inset-0 z-0">
-        {/* Original High-Quality GK Badhon Banner Image (Displays when video ends) */}
+        {/* Original High-Quality GK Badhon Banner Image (Always loaded underneath as a crisp background) */}
         <img
           src={bannerImage}
           alt="GK Badhon - Professional Goalkeeper"
-          className={`absolute inset-0 w-full h-full object-cover object-center lg:object-right-top filter brightness-105 contrast-105 transition-opacity duration-1000 ${
-            videoEnded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className="absolute inset-0 w-full h-full object-cover object-center lg:object-right-top filter brightness-105 contrast-105"
         />
 
-        {/* Dynamic Unexpired Streamable Video Player (Always mounted for seamless zero-flicker transitions) */}
-        <video
-          ref={videoRef}
-          src="/api/streamable-video"
-          autoPlay
-          muted
-          playsInline
-          onEnded={() => setVideoEnded(true)}
-          className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-95 contrast-105 transition-opacity duration-1000 ${
-            videoEnded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          }`}
-        />
+        {/* Dynamic Unexpired Streamable Video Player (Fades in over image ONLY when active and playing successfully) */}
+        {videoSrc && !videoFailed && (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            autoPlay
+            muted
+            playsInline
+            onError={() => {
+              console.warn('Video failed to play, falling back to static high-quality image banner.');
+              setVideoFailed(true);
+            }}
+            onEnded={() => setVideoEnded(true)}
+            className={`absolute inset-0 w-full h-full object-cover object-center filter brightness-95 contrast-105 transition-opacity duration-1000 ${
+              videoEnded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          />
+        )}
       </div>
 
       {/* Slogan Text Overlay - Always visible at the same place over both video and image banner */}

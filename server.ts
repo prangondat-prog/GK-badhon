@@ -910,6 +910,9 @@ app.post('/api/notifications/read', requireAdmin, (req, res) => {
 
 // Dynamic endpoint to resolve Streamable URL without expiration issues
 app.get('/api/streamable-video', async (req, res) => {
+  const isJson = req.query.json === 'true';
+  const fallbackUrl = 'https://assets.mixkit.co/videos/preview/mixkit-goalkeeper-catching-a-soccer-ball-in-the-air-40810-large.mp4';
+  
   try {
     const response = await fetch('https://streamable.com/d5q2hm', {
       headers: {
@@ -920,17 +923,25 @@ app.get('/api/streamable-video', async (req, res) => {
       throw new Error(`Failed to fetch Streamable page: ${response.statusText}`);
     }
     const html = await response.text();
-    // Use regex to locate the raw unexpired video MP4 source URL
-    const match = html.match(/https:\/\/cdn-cf-east\.streamable\.com\/video\/mp4\/d5q2hm\.mp4[^\s"'\\]+/);
+    // Use robust regex to locate the raw unexpired video MP4 source URL across any Streamable CDN subdomains
+    const match = html.match(/https:\/\/[a-zA-Z0-9.-]+\.streamable\.com\/video\/mp4\/d5q2hm\.mp4[^\s"'\\]+/);
     if (match) {
       const cleanUrl = match[0].replace(/&amp;/g, '&');
+      if (isJson) {
+        return res.json({ url: cleanUrl });
+      }
       return res.redirect(cleanUrl);
     }
-    // Reliable public fallback video if streamable scraping is blocked
-    return res.redirect('https://assets.mixkit.co/videos/preview/mixkit-goalkeeper-catching-a-soccer-ball-in-the-air-40810-large.mp4');
+    if (isJson) {
+      return res.json({ url: fallbackUrl });
+    }
+    return res.redirect(fallbackUrl);
   } catch (error) {
     console.error('Error proxying Streamable URL:', error);
-    return res.redirect('https://assets.mixkit.co/videos/preview/mixkit-goalkeeper-catching-a-soccer-ball-in-the-air-40810-large.mp4');
+    if (isJson) {
+      return res.json({ url: fallbackUrl });
+    }
+    return res.redirect(fallbackUrl);
   }
 });
 
