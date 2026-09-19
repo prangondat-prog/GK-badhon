@@ -1,47 +1,50 @@
 import React from 'react';
 import { Zap, Eye, Users, Trophy, CalendarCheck, ShieldCheck, ArrowRight, Shield } from 'lucide-react';
+import { useTranslation } from './LanguageContext';
 
 interface WhyHireSectionProps {
   onHireClick: () => void;
 }
 
 export const WhyHireSection: React.FC<WhyHireSectionProps> = ({ onHireClick }) => {
+  const { t } = useTranslation();
+
   const features = [
     {
       id: 'goalkeeping',
       icon: ShieldCheck,
-      title: 'Box Command & Aerial Dominance',
-      description: 'Commanding aerial high catches, punches, and sweeping. Dominates the penalty box on set-pieces and denies second-chance rebound opportunities.',
+      title: t('whyFeature1Title'),
+      description: t('whyFeature1Desc'),
     },
     {
       id: 'reflexes',
       icon: Zap,
-      title: 'Explosive Reflexes & 1v1 Stops',
-      description: 'Rapid low diving, kick saves, and razor-sharp close-range reaction time. Closes down breakaway attackers to eliminate goal angles decisively.',
+      title: t('whyFeature2Title'),
+      description: t('whyFeature2Desc'),
     },
     {
       id: 'awareness',
       icon: Eye,
-      title: 'Game Reading & Sweeping',
-      description: 'High tactical anticipation. Reads through-balls early, acts as a modern sweeper-keeper behind defensive lines, and initiates fast counter-attacks.',
+      title: t('whyFeature3Title'),
+      description: t('whyFeature3Desc'),
     },
     {
       id: 'communication',
       icon: Users,
-      title: 'Vocal Defensive Leadership',
-      description: 'Relentless on-pitch communication. Organizes wall setups on direct free kicks, assigns marking responsibilities, and keeps defenders sharp.',
+      title: t('whyFeature4Title'),
+      description: t('whyFeature4Desc'),
     },
     {
       id: 'tournament',
       icon: Trophy,
-      title: 'Proven Tournament Pedigree',
-      description: '129 tournaments played with proven knockout match grit. Renowned for fearless penalty shootout saves that win championships.',
+      title: t('whyFeature5Title'),
+      description: t('whyFeature5Desc'),
     },
     {
       id: 'flexible',
       icon: CalendarCheck,
-      title: 'Reliable & Flexible Booking',
-      description: 'Punctual arrival with professional goalkeeper match kits and gloves. Flexible booking for single matches, weekend cups, or league tournaments.',
+      title: t('whyFeature6Title'),
+      description: t('whyFeature6Desc'),
     }
   ];
 
@@ -56,10 +59,10 @@ export const WhyHireSection: React.FC<WhyHireSectionProps> = ({ onHireClick }) =
             <span>Competitive Advantage</span>
           </div>
           <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-neutral-950 uppercase tracking-tight">
-            WHY HIRE BADHON?
+            {t('whyTitle')}
           </h2>
           <p className="text-base sm:text-lg text-neutral-600 font-normal leading-relaxed">
-            Every competitive football match is decided by fine margins. Having an experienced, vocal, and dependable goalkeeper between the posts transforms your entire squad’s confidence.
+            {t('whySubtitle')}
           </p>
         </div>
 
@@ -106,18 +109,18 @@ export const WhyHireSection: React.FC<WhyHireSectionProps> = ({ onHireClick }) =
         <div className="mt-14 p-6 sm:p-8 rounded-2xl bg-neutral-950 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <h3 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-white">
-              Need a goalkeeper for this weekend's match or tournament?
+              {t('whyBannerTitle')}
             </h3>
             <p className="text-sm text-neutral-300 mt-1">
-              Check match calendar or request booking directly with Badhon.
+              {t('whyBannerDesc')}
             </p>
           </div>
           <button
             onClick={onHireClick}
-            className="btn-football-yellow px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2 shrink-0 shadow-lg cursor-pointer"
+            className="btn-black border border-neutral-800 hover:border-[#FFE600] px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2 shrink-0 shadow-lg cursor-pointer transition-all"
           >
-            <span>REQUEST MATCH BOOKING</span>
-            <ArrowRight className="w-4 h-4 text-black" />
+            <span>{t('whyBannerBtn')}</span>
+            <ArrowRight className="w-4 h-4 text-[#FFE600]" />
           </button>
         </div>
 

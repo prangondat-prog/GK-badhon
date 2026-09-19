@@ -593,6 +593,8 @@ app.post('/api/bookings', (req, res) => {
     matchDate,
     matchTime,
     location,
+    district,
+    division,
     numberOfMatches,
     expectedDuration,
     additionalMessage,
@@ -600,8 +602,8 @@ app.post('/api/bookings', (req, res) => {
     gkName
   } = req.body;
 
-  if (!name || !phone || !matchDate || !location) {
-    return res.status(400).json({ error: 'Please provide all required fields: Name, Phone, Date, and Location.' });
+  if (!name || !phone || !matchDate || !location || !district || !division) {
+    return res.status(400).json({ error: 'Please provide all required fields: Name, Phone, Date, Location, District, and Division.' });
   }
 
   const db = readDB();
@@ -622,6 +624,8 @@ app.post('/api/bookings', (req, res) => {
     matchDate,
     matchTime: matchTime || 'TBD',
     location,
+    district: district || '',
+    division: division || '',
     numberOfMatches: Number(numberOfMatches) || 1,
     expectedDuration: expectedDuration || '90 Minutes',
     additionalMessage: additionalMessage || '',
@@ -906,43 +910,6 @@ app.post('/api/notifications/read', requireAdmin, (req, res) => {
     writeDB(db);
   }
   res.json({ success: true });
-});
-
-// Dynamic endpoint to resolve Streamable URL without expiration issues
-app.get('/api/streamable-video', async (req, res) => {
-  const isJson = req.query.json === 'true';
-  const fallbackUrl = 'https://assets.mixkit.co/videos/preview/mixkit-goalkeeper-catching-a-soccer-ball-in-the-air-40810-large.mp4';
-  
-  try {
-    const response = await fetch('https://streamable.com/d5q2hm', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
-      }
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch Streamable page: ${response.statusText}`);
-    }
-    const html = await response.text();
-    // Use robust regex to locate the raw unexpired video MP4 source URL across any Streamable CDN subdomains
-    const match = html.match(/https:\/\/[a-zA-Z0-9.-]+\.streamable\.com\/video\/mp4\/d5q2hm\.mp4[^\s"'\\]+/);
-    if (match) {
-      const cleanUrl = match[0].replace(/&amp;/g, '&');
-      if (isJson) {
-        return res.json({ url: cleanUrl });
-      }
-      return res.redirect(cleanUrl);
-    }
-    if (isJson) {
-      return res.json({ url: fallbackUrl });
-    }
-    return res.redirect(fallbackUrl);
-  } catch (error) {
-    console.error('Error proxying Streamable URL:', error);
-    if (isJson) {
-      return res.json({ url: fallbackUrl });
-    }
-    return res.redirect(fallbackUrl);
-  }
 });
 
 // ---------------- VITE MIDDLEWARE & STATIC SERVING ---------------- //

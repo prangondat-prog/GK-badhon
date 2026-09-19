@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Star, MessageSquare, Plus, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Star, MessageSquare, Plus, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { ReviewItem } from '../types';
 import { submitReview } from '../api';
+import { useTranslation } from './LanguageContext';
 
 interface ReviewsSectionProps {
   reviews: ReviewItem[];
@@ -18,6 +19,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
   onRefreshReviews,
   onOpenAdminModal,
 }) => {
+  const { t, lang } = useTranslation();
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [clientName, setClientName] = useState('');
   const [teamName, setTeamName] = useState('');
@@ -35,7 +37,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
     setSuccessMsg(null);
 
     if (!clientName.trim() || !reviewText.trim()) {
-      setErrorMsg('Please enter your name and review details.');
+      setErrorMsg(lang === 'bn' ? 'দয়া করে আপনার নাম এবং রিভিউ বিবরণ লিখুন।' : 'Please enter your name and review details.');
       return;
     }
 
@@ -46,18 +48,18 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
         teamName,
         rating,
         review: reviewText,
-        matchDate,
+        matchDate: matchDate || 'Recent Match',
         matchType,
       });
 
-      setSuccessMsg(res.message || 'Review submitted! It will appear publicly after moderation approval.');
+      setSuccessMsg(res.message || (lang === 'bn' ? 'রিভিউ জমা দেওয়া হয়েছে! এটি অনুমোদনের পর প্রকাশিত হবে।' : 'Review submitted! It will appear publicly after moderation approval.'));
       setClientName('');
       setTeamName('');
       setReviewText('');
       setMatchDate('');
       onRefreshReviews();
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to submit review');
+      setErrorMsg(err.message || (lang === 'bn' ? 'রিভিউ জমা দিতে ব্যর্থ হয়েছে' : 'Failed to submit review'));
     } finally {
       setSubmitting(false);
     }
@@ -72,34 +74,34 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-yellow-100 text-yellow-900 text-xs font-bold uppercase tracking-wider mb-2">
               <Star className="w-3.5 h-3.5 fill-yellow-500 stroke-yellow-500" />
-              Verified Match Reviews
+              <span>{lang === 'bn' ? 'যাচাইকৃত ম্যাচ রিভিউ' : 'Verified Match Reviews'}</span>
             </div>
             <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-neutral-950 uppercase tracking-tight">
-              TEAM REVIEWS
+              {t('reviewsTitle')}
             </h2>
             <p className="text-base text-neutral-600 font-medium mt-1">
-              Feedback from team captains, club managers, and tournament organizers.
+              {t('reviewsSubtitle')}
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             {/* Overall Score Pill */}
             <div className="flex items-center gap-3 p-3 rounded-xl bg-neutral-950 text-white shadow-sm">
               <div className="font-heading text-3xl font-extrabold text-yellow-400">
                 ★ {averageRating || 4.9}
               </div>
               <div className="text-xs border-l border-neutral-800 pl-3">
-                <div className="font-bold text-white">Overall Rating</div>
-                <div className="text-neutral-400 font-medium">{totalReviews || reviews.length} Team Ratings</div>
+                <div className="font-bold text-white">{t('reviewsOverall')}</div>
+                <div className="text-neutral-400 font-medium">{(totalReviews || reviews.length)} {t('reviewsRatings')}</div>
               </div>
             </div>
 
             <button
               onClick={() => setShowReviewModal(true)}
-              className="btn-football-yellow px-5 py-3 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer"
+              className="px-5 py-3 rounded-xl bg-neutral-950 text-white border border-neutral-800 hover:border-[#FFE600] text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm cursor-pointer transition-all"
             >
-              <Plus className="w-4 h-4" />
-              <span>LEAVE A REVIEW</span>
+              <Plus className="w-4 h-4 text-[#FFE600]" />
+              <span>{t('reviewsLeaveBtn')}</span>
             </button>
           </div>
         </div>
@@ -129,7 +131,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
 
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
                     <ShieldCheck className="w-3 h-3" />
-                    Verified Match
+                    {t('reviewsVerified')}
                   </span>
                 </div>
 
@@ -151,7 +153,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 </div>
 
                 <span className="text-[11px] text-neutral-400 font-medium">
-                  {rev.matchDate}
+                  {lang === 'bn' && rev.matchDate === 'Recent Match' ? 'সাম্প্রতিক ম্যাচ' : rev.matchDate}
                 </span>
               </div>
             </div>
@@ -162,20 +164,20 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
           <div className="text-center py-16 bg-neutral-50 rounded-2xl border border-neutral-200">
             <MessageSquare className="w-10 h-10 text-neutral-400 mx-auto mb-2" />
             <p className="text-sm font-semibold text-neutral-600">
-              No approved reviews yet. Be the first team to leave feedback after your match!
+              {t('reviewsNoReviews')}
             </p>
           </div>
         )}
 
         {/* Footer Moderation Notice */}
-        <div className="mt-8 text-center text-xs text-neutral-500 flex items-center justify-center gap-2">
-          <span>All reviews undergo moderation to ensure authentic match bookings.</span>
-          <span>•</span>
+        <div className="mt-8 text-center text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-center gap-2">
+          <span>{t('reviewsNotice')}</span>
+          <span className="hidden sm:inline">•</span>
           <button
             onClick={onOpenAdminModal}
-            className="text-neutral-700 hover:text-black font-semibold underline"
+            className="text-neutral-700 hover:text-black font-semibold underline cursor-pointer"
           >
-            Admin: Review Moderation Queue
+            {t('reviewsModerationBtn')}
           </button>
         </div>
 
@@ -188,10 +190,10 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
             <div className="flex items-center justify-between border-b border-neutral-100 pb-3">
               <div>
                 <h3 className="font-heading text-xl font-bold text-neutral-950">
-                  Leave a Match Review
+                  {t('reviewModalTitle')}
                 </h3>
                 <p className="text-xs text-neutral-500">
-                  Share your squad's experience playing with GK Badhon
+                  {t('reviewModalSub')}
                 </p>
               </div>
               <button
@@ -200,7 +202,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   setSuccessMsg(null);
                   setErrorMsg(null);
                 }}
-                className="text-neutral-400 hover:text-neutral-900 text-lg font-bold p-1"
+                className="text-neutral-400 hover:text-neutral-900 text-lg font-bold p-1 cursor-pointer"
               >
                 ✕
               </button>
@@ -210,7 +212,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
               <div className="py-8 text-center space-y-3">
                 <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
                 <h4 className="font-heading text-lg font-bold text-neutral-950">
-                  Review Submitted!
+                  {t('reviewSuccessTitle')}
                 </h4>
                 <p className="text-xs text-neutral-600">
                   {successMsg}
@@ -220,9 +222,9 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                     setShowReviewModal(false);
                     setSuccessMsg(null);
                   }}
-                  className="btn-black px-5 py-2.5 rounded-lg text-xs font-bold"
+                  className="px-5 py-2.5 rounded-lg bg-neutral-950 text-white font-bold text-xs cursor-pointer hover:bg-neutral-800"
                 >
-                  Close Window
+                  {t('reviewBtnClose')}
                 </button>
               </div>
             ) : (
@@ -235,7 +237,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
 
                 <div>
                   <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 block mb-1">
-                    Rating (1 to 5 Stars)
+                    {t('reviewLabelRating')}
                   </label>
                   <div className="flex items-center gap-2">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -255,7 +257,7 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                       </button>
                     ))}
                     <span className="text-xs font-bold text-neutral-700 ml-2">
-                      {rating} / 5 Stars
+                      {rating} / 5 {t('reviewLabelStars')}
                     </span>
                   </div>
                 </div>
@@ -263,12 +265,12 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 block mb-1">
-                      Your Name / Role *
+                      {t('reviewLabelName')}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Captain Nayeem"
+                      placeholder={t('reviewPlaceholderName')}
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-sm focus:ring-2 focus:ring-yellow-400 outline-hidden"
@@ -276,12 +278,12 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   </div>
                   <div>
                     <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 block mb-1">
-                      Team / Club Name *
+                      {t('reviewLabelTeam')}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Uttara Knights FC"
+                      placeholder={t('reviewPlaceholderTeam')}
                       value={teamName}
                       onChange={(e) => setTeamName(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-sm focus:ring-2 focus:ring-yellow-400 outline-hidden"
@@ -292,11 +294,11 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 block mb-1">
-                      Match Type
+                      {t('reviewLabelMatchType')}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Tournament Final / Turf Match"
+                      placeholder={t('reviewPlaceholderMatchType')}
                       value={matchType}
                       onChange={(e) => setMatchType(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-sm focus:ring-2 focus:ring-yellow-400 outline-hidden"
@@ -304,11 +306,11 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                   </div>
                   <div>
                     <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 block mb-1">
-                      Match Month / Date
+                      {t('reviewLabelDate')}
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Recent Match"
+                      placeholder={t('reviewPlaceholderDate')}
                       value={matchDate}
                       onChange={(e) => setMatchDate(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-sm focus:ring-2 focus:ring-yellow-400 outline-hidden"
@@ -318,12 +320,12 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
 
                 <div>
                   <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 block mb-1">
-                    Your Review Feedback *
+                    {t('reviewLabelFeedback')}
                   </label>
                   <textarea
                     required
                     rows={3}
-                    placeholder="Describe how Badhon performed in the match, communication with defenders, penalty saves, etc..."
+                    placeholder={t('reviewPlaceholderFeedback')}
                     value={reviewText}
                     onChange={(e) => setReviewText(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 text-sm focus:ring-2 focus:ring-yellow-400 outline-hidden"
@@ -331,23 +333,23 @@ export const ReviewsSection: React.FC<ReviewsSectionProps> = ({
                 </div>
 
                 <p className="text-[11px] text-neutral-500">
-                  * Note: To prevent spam or unverified submissions, reviews are briefly checked by admin before public listing.
+                  {t('reviewNoteModeration')}
                 </p>
 
                 <div className="flex items-center justify-end gap-3 pt-2">
                   <button
                     type="button"
                     onClick={() => setShowReviewModal(false)}
-                    className="px-4 py-2.5 rounded-lg border border-neutral-300 text-xs font-semibold text-neutral-700 hover:bg-neutral-50"
+                    className="px-4 py-2.5 rounded-lg border border-neutral-300 text-xs font-semibold text-neutral-700 hover:bg-neutral-50 cursor-pointer"
                   >
-                    Cancel
+                    {lang === 'bn' ? 'বাতিল' : 'Cancel'}
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="btn-football-yellow px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider"
+                    className="px-6 py-2.5 rounded-lg bg-neutral-950 text-white border border-neutral-800 hover:border-[#FFE600] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                   >
-                    {submitting ? 'Submitting...' : 'SUBMIT REVIEW'}
+                    {submitting ? (lang === 'bn' ? 'জমা দেওয়া হচ্ছে...' : 'Submitting...') : t('reviewsLeaveBtn')}
                   </button>
                 </div>
               </form>

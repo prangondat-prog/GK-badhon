@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, ExternalLink, ShieldCheck } from 'lucide-react';
+import { useTranslation } from './LanguageContext';
 
 interface FloatingContactFabProps {
   tiktokUrl?: string;
@@ -10,6 +11,7 @@ export const FloatingContactFab: React.FC<FloatingContactFabProps> = ({
   tiktokUrl = 'https://www.tiktok.com/@mr.bandhon.das',
   instagramUrl = 'https://www.instagram.com/mr.badhon__das/',
 }) => {
+  const { lang } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,11 +30,11 @@ export const FloatingContactFab: React.FC<FloatingContactFabProps> = ({
               </div>
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-white">
-                  GK Badhon Channels
+                  {lang === 'bn' ? 'জিকে বাঁধন চ্যানেলসমূহ' : 'GK Badhon Channels'}
                 </h4>
                 <p className="text-[11px] text-neutral-400 flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                  Official Social Contacts
+                  {lang === 'bn' ? 'অফিসিয়াল সোশ্যাল যোগাযোগ' : 'Official Social Contacts'}
                 </p>
               </div>
             </div>
@@ -101,7 +103,7 @@ export const FloatingContactFab: React.FC<FloatingContactFabProps> = ({
 
           <div className="pt-2 border-t border-neutral-900 text-center">
             <span className="text-[10px] text-neutral-500 font-medium">
-              Direct DM & Match Highlight Videos
+              {lang === 'bn' ? 'সরাসরি ডিএম এবং ম্যাচ হাইলাইট ভিডিওসমূহ' : 'Direct DM & Match Highlight Videos'}
             </span>
           </div>
         </div>
@@ -116,7 +118,7 @@ export const FloatingContactFab: React.FC<FloatingContactFabProps> = ({
       >
         <MessageCircle className="w-4 h-4 text-[#FFE600]" />
         <span className="text-xs font-bold uppercase tracking-wider">
-          Contact Channels
+          {lang === 'bn' ? 'যোগাযোগ চ্যানেল' : 'Contact Channels'}
         </span>
       </button>
     </div>

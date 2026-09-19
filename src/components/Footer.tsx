@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, MessageCircle, MapPin, Lock, ExternalLink, ShieldCheck } from 'lucide-react';
 import { ContactSettings } from '../types';
+import { useTranslation } from './LanguageContext';
 
 interface FooterProps {
   contact: ContactSettings | null;
@@ -15,12 +16,13 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenTrackModal,
   onScrollTo,
 }) => {
+  const { t, lang } = useTranslation();
   const currentYear = new Date().getFullYear();
   const instagramUrl = contact?.instagramUrl || 'https://www.instagram.com/mr.badhon__das/';
   const tiktokUrl = contact?.tiktokUrl || 'https://www.tiktok.com/@mr.bandhon.das';
 
   return (
-    <footer className="bg-neutral-950 text-white border-t border-neutral-800">
+    <footer className="bg-neutral-950 text-white border-t border-neutral-800 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
@@ -41,18 +43,18 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             <p className="text-xs text-neutral-400 max-w-sm leading-relaxed">
-              Official professional goalkeeper hiring & match booking platform. 129 tournaments played, 650 matches, and 180 decisive match saves. Available for Dhaka tournaments, league fixtures, friendly cups, and outstation championships.
+              {lang === 'bn' 
+                ? 'অফিসিয়াল গোলকিপার হায়ার ও বুকিং প্ল্যাটফর্ম। ১২৯+ টুর্নামেন্ট, ৬৫০+ ম্যাচ এবং ১৮০+ নিশ্চিত সেভ। ঢাকা ও সারা দেশের যেকোনো ম্যাচের জন্য বাঁধনকে হায়ার করতে পারেন।'
+                : 'Official professional goalkeeper hiring & match booking platform. 129 tournaments played, 650 matches, and 180 decisive match saves. Available for Dhaka tournaments, league fixtures, friendly cups, and outstation championships.'}
             </p>
 
             <div className="flex items-center gap-3 pt-2 text-xs text-neutral-400">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>Verified Direct Line</span>
+                <span>{lang === 'bn' ? 'ভেরিফাইড ডিরেক্ট লাইন' : 'Verified Direct Line'}</span>
               </div>
               <span>•</span>
-              <div>No Hidden Fees</div>
-              <span>•</span>
-              <div>Pro Gear Included</div>
+              <div>{lang === 'bn' ? 'কোনো গোপন ফি নেই' : 'No Hidden Fees'}</div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2 pt-2">
@@ -89,32 +91,27 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Col 2: Navigation */}
           <div className="space-y-3 text-xs">
             <h4 className="font-heading font-bold text-white uppercase tracking-wider text-sm">
-              Navigation
+              {t('footerLinks')}
             </h4>
             <ul className="space-y-2 text-neutral-400">
               <li>
-                <button onClick={() => onScrollTo('hero')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Home
+                <button onClick={() => onScrollTo('hero')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
+                  {lang === 'bn' ? 'হোম' : 'Home'}
                 </button>
               </li>
               <li>
-                <button onClick={() => onScrollTo('profile')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Goalkeeper Profile & Stats
+                <button onClick={() => onScrollTo('profile')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
+                  {t('navProfile')}
                 </button>
               </li>
               <li>
-                <button onClick={() => onScrollTo('why-hire')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Why Badhon
+                <button onClick={() => onScrollTo('why-hire')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
+                  {t('navWhyBadhon')}
                 </button>
               </li>
               <li>
-                <button onClick={() => onScrollTo('showcase')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Match Showcase & Saves
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onScrollTo('availability')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Availability Calendar
+                <button onClick={() => onScrollTo('showcase')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
+                  {t('navShowcase')}
                 </button>
               </li>
             </ul>
@@ -123,27 +120,22 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Col 3: Services & Booking */}
           <div className="space-y-3 text-xs">
             <h4 className="font-heading font-bold text-white uppercase tracking-wider text-sm">
-              Booking & Rates
+              {lang === 'bn' ? 'বুকিং ও ট্র্যাকিং' : 'Booking & Tracking'}
             </h4>
             <ul className="space-y-2 text-neutral-400">
               <li>
-                <button onClick={() => onScrollTo('pricing')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Pricing Packages
+                <button onClick={() => onScrollTo('hiring-section')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
+                  {t('btnHire')}
                 </button>
               </li>
               <li>
-                <button onClick={() => onScrollTo('hiring-section')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Hire Badhon (Form)
+                <button onClick={onOpenTrackModal} className="text-[#FFE600] hover:text-white font-bold transition-colors cursor-pointer text-left">
+                  {t('btnTracking')}
                 </button>
               </li>
               <li>
-                <button onClick={onOpenTrackModal} className="text-[#FFE600] hover:text-white font-bold transition-colors cursor-pointer">
-                  Track Booking Status
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onScrollTo('reviews')} className="hover:text-yellow-400 transition-colors cursor-pointer">
-                  Team Reviews
+                <button onClick={() => onScrollTo('reviews')} className="hover:text-yellow-400 transition-colors cursor-pointer text-left">
+                  {t('navReviews')}
                 </button>
               </li>
             </ul>
@@ -152,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Col 4: Contact & Admin */}
           <div className="space-y-3 text-xs">
             <h4 className="font-heading font-bold text-white uppercase tracking-wider text-sm">
-              Match Hotline
+              {t('footerContactTitle')}
             </h4>
             <div className="space-y-2.5 text-neutral-400">
               <p className="flex items-center gap-2">
@@ -177,7 +169,7 @@ export const Footer: React.FC<FooterProps> = ({
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-yellow-400 border border-neutral-800 text-[11px] font-semibold transition-colors cursor-pointer"
               >
                 <Lock className="w-3 h-3" />
-                <span>Admin Portal</span>
+                <span>{lang === 'bn' ? 'অ্যাডমিন পোর্টাল' : 'Admin Portal'}</span>
               </button>
             </div>
           </div>
@@ -187,10 +179,10 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <div>
-            © {currentYear} <strong>GK Badhon</strong>. Professional Football Goalkeeper Platform.
+            © {currentYear} <strong>GK Badhon</strong>. {lang === 'bn' ? 'পেশাদার ফুটবল গোলকিপার প্ল্যাটফর্ম।' : 'Professional Football Goalkeeper Platform.'}
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-[11px]">Dhaka • 129 Tournaments • 650 Matches • 180 Saves</span>
+          <div className="flex items-center gap-4 font-mono text-[10px]">
+            <span>{lang === 'bn' ? 'ঢাকা • ১২৯ টুর্নামেন্ট • ৬৫০ ম্যাচ • ১৮০ সেভ' : 'Dhaka • 129 Tournaments • 650 Matches • 180 Saves'}</span>
           </div>
         </div>
 

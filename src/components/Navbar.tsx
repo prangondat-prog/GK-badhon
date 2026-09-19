@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, UserCheck, Menu, X, CheckCircle2, Zap, Camera, Tag, Star, Phone, ExternalLink, MessageCircle } from 'lucide-react';
 import { ProfileData } from '../types';
+import { useTranslation } from './LanguageContext';
 
 interface NavbarProps {
   profile: ProfileData | null;
@@ -16,6 +17,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenStatusModal,
   activeSection,
 }) => {
+  const { t, lang, setLang } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactMenuOpen, setContactMenuOpen] = useState(false);
   const contactDropdownRef = useRef<HTMLDivElement>(null);
@@ -44,11 +46,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   const logoUrl = 'https://i.postimg.cc/nLR5WP6Y/dc6081fb-7132-4d6b-980b-45f666927356.png';
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/80 transition-all">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200/80 transition-all font-sans">
       {/* Main Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18">
-          {/* Brand Logo & Name (Subtext removed per request) */}
+          {/* Brand Logo & Name */}
           <div
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex items-center gap-3 cursor-pointer group select-none"
@@ -73,54 +75,64 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => scrollToSection('profile')}
               className={`hover:text-neutral-950 transition-colors cursor-pointer ${activeSection === 'profile' ? 'text-neutral-950 font-bold' : ''}`}
             >
-              Profile
+              {t('navProfile')}
             </button>
             <button
               onClick={() => scrollToSection('why-hire')}
               className={`hover:text-neutral-950 transition-colors cursor-pointer ${activeSection === 'why-hire' ? 'text-neutral-950 font-bold' : ''}`}
             >
-              Why Badhon
+              {t('navWhyBadhon')}
             </button>
             <button
               onClick={() => scrollToSection('showcase')}
               className={`hover:text-neutral-950 transition-colors cursor-pointer ${activeSection === 'showcase' ? 'text-neutral-950 font-bold' : ''}`}
             >
-              Showcase
+              {t('navShowcase')}
             </button>
             <button
               onClick={() => scrollToSection('reviews')}
               className={`hover:text-neutral-950 transition-colors cursor-pointer ${activeSection === 'reviews' ? 'text-neutral-950 font-bold' : ''}`}
             >
-              Reviews
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className={`hover:text-neutral-950 transition-colors cursor-pointer ${activeSection === 'contact' ? 'text-neutral-950 font-bold' : ''}`}
-            >
-              Contact
+              {t('navReviews')}
             </button>
           </nav>
 
           {/* Action CTAs */}
           <div className="hidden sm:flex items-center gap-3">
+            {/* Language Selection Button */}
+            <button
+              onClick={() => setLang(lang === 'en' ? 'bn' : 'en')}
+              className="px-3.5 py-2 rounded-full border border-neutral-300 hover:border-neutral-500 hover:bg-neutral-50 text-xs font-bold uppercase transition-all tracking-wider text-neutral-800 flex items-center gap-1 cursor-pointer"
+            >
+              <span>🌐 {lang === 'en' ? 'বাংলা' : 'EN'}</span>
+            </button>
+
             {/* Soft Hire Button */}
             <button
               id="nav-hire-btn"
               onClick={() => onOpenBooking()}
-              className="btn-football-yellow px-5 py-2.5 rounded-full text-xs tracking-wider uppercase flex items-center gap-1.5 shadow-sm active:scale-98 cursor-pointer transition-all duration-200"
+              className="btn-football-yellow px-5 py-2.5 rounded-full text-xs tracking-wider uppercase flex items-center gap-1.5 shadow-sm active:scale-98 cursor-pointer transition-all duration-200 font-bold"
             >
               <UserCheck className="w-4 h-4" />
-              <span>HIRE BADHON</span>
+              <span>{t('btnHire')}</span>
             </button>
           </div>
 
           {/* Mobile hamburger */}
           <div className="flex sm:hidden items-center gap-2">
+            {/* Language Button on Mobile Navbar directly */}
+            <button
+              onClick={() => setLang(lang === 'en' ? 'bn' : 'en')}
+              className="px-2.5 py-1.5 rounded-full border border-neutral-300 text-xs font-bold uppercase tracking-wider text-neutral-800 cursor-pointer"
+            >
+              {lang === 'en' ? 'বাং' : 'EN'}
+            </button>
+
             <button
               onClick={() => onOpenBooking()}
               className="btn-football-yellow px-3.5 py-1.5 rounded-full text-xs font-bold uppercase cursor-pointer"
             >
-              HIRE
+              {lang === 'bn' ? 'হায়ার' : 'HIRE'}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -141,28 +153,28 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => scrollToSection('profile')}
               className="text-left px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 flex items-center gap-2"
             >
-              <span className="text-xs font-bold text-neutral-700">Profile</span>
+              <span className="text-xs font-bold text-neutral-700">{t('navProfile')}</span>
             </button>
             <button
               onClick={() => scrollToSection('why-hire')}
               className="text-left px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 flex items-center gap-2"
             >
               <Zap className="w-4 h-4 text-neutral-700" />
-              <span>Why Badhon</span>
+              <span>{t('navWhyBadhon')}</span>
             </button>
             <button
               onClick={() => scrollToSection('showcase')}
               className="text-left px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 flex items-center gap-2"
             >
               <Camera className="w-4 h-4 text-neutral-700" />
-              <span>Showcase</span>
+              <span>{t('navShowcase')}</span>
             </button>
             <button
               onClick={() => scrollToSection('reviews')}
               className="text-left px-3 py-2 rounded-lg hover:bg-neutral-100 text-neutral-800 flex items-center gap-2"
             >
               <Star className="w-4 h-4 text-neutral-700" />
-              <span>Reviews</span>
+              <span>{t('navReviews')}</span>
             </button>
 
             {/* 2 Contact Channels in Mobile */}
@@ -200,6 +212,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="pt-2 border-t border-neutral-100 flex flex-col gap-2">
+            {/* Language selection toggle inside mobile menu drawer */}
+            <button
+              onClick={() => {
+                setLang(lang === 'en' ? 'bn' : 'en');
+                setMobileMenuOpen(false);
+              }}
+              className="w-full py-2.5 border border-neutral-200 rounded-full text-xs font-bold uppercase text-neutral-800 hover:bg-neutral-50 flex items-center justify-center gap-2"
+            >
+              🌐 SWITCH TO {lang === 'en' ? 'বাংলা (BANGLA)' : 'ENGLISH'}
+            </button>
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -208,7 +231,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="btn-football-yellow w-full py-3 rounded-full text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
             >
               <UserCheck className="w-4 h-4" />
-              HIRE BADHON NOW
+              {t('btnHire')}
             </button>
           </div>
         </div>

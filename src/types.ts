@@ -29,6 +29,7 @@ export interface ProfileData {
   savePercentage: number;
   penaltySaveRate: string;
   bio: string;
+  bio_bn?: string;
   avatarUrl: string;
   heroImageUrl: string;
   tiktokUrl?: string;
@@ -68,6 +69,8 @@ export interface BookingRequest {
   matchDate: string;
   matchTime: string;
   location: string;
+  district?: string;
+  division?: string;
   numberOfMatches: number;
   expectedDuration: string;
   additionalMessage: string;
@@ -97,7 +100,9 @@ export interface GalleryItem {
   category: 'Match Moments' | 'Saves' | 'Training' | 'Tournaments';
   url: string;
   title: string;
+  title_bn?: string;
   description: string;
+  description_bn?: string;
   date?: string;
   videoDuration?: string;
 }

@@ -5,9 +5,7 @@ import { ProfileSection } from './components/ProfileSection';
 import { WhyHireSection } from './components/WhyHireSection';
 import { PlayerShowcase } from './components/PlayerShowcase';
 import { HiringSection } from './components/HiringSection';
-import { PricingSection } from './components/PricingSection';
 import { ReviewsSection } from './components/ReviewsSection';
-import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { BookingStatusModal } from './components/BookingStatusModal';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
@@ -166,26 +164,12 @@ export default function App() {
           onTrackBooking={handleTrackBooking}
         />
 
-        {/* 7. Pricing Packages */}
-        <PricingSection
-          pricing={pricing}
-          onRequestBooking={handleRequestBookingFromPricing}
-          onOpenAdminModal={() => setIsAdminOpen(true)}
-        />
-
         {/* 8. Team Reviews */}
         <ReviewsSection
           reviews={approvedReviews}
           averageRating={avgRating}
           totalReviews={approvedReviews.length}
           onRefreshReviews={loadData}
-          onOpenAdminModal={() => setIsAdminOpen(true)}
-        />
-
-        {/* 9. Contact Section */}
-        <ContactSection
-          contact={contact}
-          onHireClick={handleHireClick}
           onOpenAdminModal={() => setIsAdminOpen(true)}
         />
       </main>

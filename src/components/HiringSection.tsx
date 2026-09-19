@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserCheck, Calendar, Clock, MapPin, Shield, CheckCircle2, AlertCircle, Copy, Check, ArrowRight } from 'lucide-react';
 import { createBookingRequest } from '../api';
 import { BookingRequest } from '../types';
+import { useTranslation } from './LanguageContext';
 
 interface HiringSectionProps {
   prefilledDate?: string;
@@ -16,6 +17,8 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
   prefilledGk,
   onTrackBooking,
 }) => {
+  const { t, lang } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -24,6 +27,8 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
     matchType: prefilledType || 'Match Booking',
     matchDate: prefilledDate || '',
     matchTime: '16:00',
+    division: '',
+    district: '',
     location: '',
     numberOfMatches: 1,
     expectedDuration: '90 Minutes',
@@ -60,7 +65,9 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
       `🛡️ Team: ${data.teamName || 'N/A'}\n` +
       `🏆 Match Type: ${data.matchType}\n` +
       `📅 Date: ${data.matchDate} at ${data.matchTime}\n` +
-      `📍 Location: ${data.location}\n` +
+      `🇧🇩 Division: ${data.division}\n` +
+      `🏙️ District: ${data.district}\n` +
+      `🏟️ Match Location: ${data.location}\n` +
       `⏱️ Duration: ${data.numberOfMatches} Match(es) (${data.expectedDuration})\n` +
       `💬 Note: ${data.additionalMessage || 'N/A'}\n\n` +
       `🔗 Tracking Code: ${code}\n\n` +
@@ -72,19 +79,27 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
     setErrorMsg(null);
 
     if (!formData.name.trim()) {
-      setErrorMsg('Please enter your name or contact person name.');
+      setErrorMsg(t('validationName'));
       return;
     }
     if (!formData.phone.trim()) {
-      setErrorMsg('Please provide a valid phone number for match coordination.');
+      setErrorMsg(t('validationPhone'));
       return;
     }
     if (!formData.matchDate) {
-      setErrorMsg('Please select a match date.');
+      setErrorMsg(t('validationDate'));
+      return;
+    }
+    if (!formData.division) {
+      setErrorMsg(t('validationDivision'));
+      return;
+    }
+    if (!formData.district.trim()) {
+      setErrorMsg(t('validationDistrict'));
       return;
     }
     if (!formData.location.trim()) {
-      setErrorMsg('Please provide the match venue or turf location.');
+      setErrorMsg(t('validationLocation'));
       return;
     }
 
@@ -125,6 +140,17 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
+  const divisionsList = [
+    'Barisal',
+    'Chittagong',
+    'Dhaka',
+    'Khulna',
+    'Mymensingh',
+    'Rajshahi',
+    'Rangpur',
+    'Sylhet',
+  ];
+
   return (
     <section id="hiring-section" className="py-16 sm:py-24 bg-white border-b border-neutral-100">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -133,13 +159,13 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
         <div className="text-center mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-yellow-100 text-yellow-900 text-xs font-bold uppercase tracking-wider">
             <UserCheck className="w-3.5 h-3.5" />
-            Official Booking System
+            {t('bookingSystem')}
           </div>
           <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-neutral-950 uppercase tracking-tight">
-            HIRE BADHON
+            {t('hiringHeading')}
           </h2>
           <p className="text-base text-neutral-600 max-w-xl mx-auto">
-            Fill the form below to submit your match request. You will be redirected instantly to send the details directly to Badhon on Instagram!
+            {t('hiringSubheading')}
           </p>
         </div>
 
@@ -152,10 +178,10 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
 
             <div className="space-y-2">
               <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#FFE600] bg-neutral-950 px-6 py-3 rounded-xl uppercase tracking-tight inline-block">
-                REQUEST GENERATED!
+                {t('formSuccessTitle')}
               </h3>
-              <p className="text-sm sm:text-base text-neutral-800 max-w-lg mx-auto font-medium">
-                Your hiring details have been <span className="text-emerald-600 font-extrabold">automatically copied to your clipboard</span>. Let's send it directly to GK Badhon's Instagram DM now!
+              <p className="text-sm sm:text-base text-neutral-800 max-w-lg mx-auto font-medium font-sans">
+                {t('formSuccessDesc')}
               </p>
             </div>
 
@@ -165,10 +191,10 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                 <svg className="w-8 h-8 fill-current text-white animate-bounce" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
                 </svg>
-                <span className="font-heading text-lg font-black uppercase tracking-wider">Send on Instagram</span>
+                <span className="font-heading text-lg font-black uppercase tracking-wider">{lang === 'bn' ? 'ইনস্টাগ্রামে পাঠান' : 'Send on Instagram'}</span>
               </div>
               <p className="text-xs text-pink-100 leading-relaxed font-medium">
-                Click the button below to open Instagram DM. Just paste (Ctrl+V / long press) and send!
+                {lang === 'bn' ? 'ইনস্টাগ্রাম ডিএম খুলতে নিচের বোতামে ক্লিক করুন এবং কপি করা তথ্য পেস্ট করে দিন!' : 'Click the button below to open Instagram DM. Just paste (Ctrl+V / long press) and send!'}
               </p>
               <div className="flex flex-col gap-2 pt-1">
                 <a
@@ -177,7 +203,7 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-white text-neutral-900 hover:bg-neutral-50 rounded-xl text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-md transition-all active:scale-98"
                 >
-                  <span>💬 OPEN INSTAGRAM DM NOW</span>
+                  <span>{t('btnOpenInstagram')}</span>
                 </a>
                 
                 <button
@@ -185,7 +211,7 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                   className="w-full py-2.5 bg-black/25 hover:bg-black/35 rounded-xl text-xs font-bold uppercase tracking-wide flex items-center justify-center gap-1.5 transition-all text-white border border-white/10"
                 >
                   {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : null}
-                  <span>{copiedCode ? 'Copied to Clipboard!' : '📋 Copy Message Again'}</span>
+                  <span>{copiedCode ? t('btnCopied') : t('btnCopyAgain')}</span>
                 </button>
               </div>
             </div>
@@ -194,7 +220,7 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
             <div className="max-w-md mx-auto p-4 rounded-xl bg-neutral-900 text-white flex items-center justify-between gap-4">
               <div className="text-left">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block">
-                  Local Tracking Reference Code
+                  {t('trackingRefCode')}
                 </span>
                 <span className="font-mono text-lg font-extrabold text-yellow-400 tracking-wider">
                   {submittedBooking.trackingCode}
@@ -205,27 +231,27 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                 className="px-3 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-xs font-bold text-white flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 {copiedCode ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                <span>{copiedCode ? 'Copied' : 'Copy Code'}</span>
+                <span>{copiedCode ? t('btnCopied') : t('btnCopyCode')}</span>
               </button>
             </div>
 
             {/* Match Summary Review Box */}
             <div className="max-w-md mx-auto p-4 rounded-xl bg-neutral-50 border border-neutral-200 text-left text-xs space-y-2">
               <div className="flex justify-between">
-                <span className="text-neutral-500">Goalkeeper:</span>
+                <span className="text-neutral-500">{t('formGoalkeeper')}:</span>
                 <span className="font-bold text-neutral-900">{submittedBooking.gkName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Team / Club:</span>
+                <span className="text-neutral-500">{t('formTeamClub')}:</span>
                 <span className="font-bold text-neutral-900">{submittedBooking.teamName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Match Date & Time:</span>
+                <span className="text-neutral-500">{t('formDateTime')}:</span>
                 <span className="font-bold text-neutral-900">{submittedBooking.matchDate} at {submittedBooking.matchTime}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-neutral-500">Venue:</span>
-                <span className="font-bold text-neutral-900">{submittedBooking.location}</span>
+                <span className="text-neutral-500">{t('formVenue')}:</span>
+                <span className="font-bold text-neutral-900">{submittedBooking.location} ({submittedBooking.district}, {submittedBooking.division})</span>
               </div>
             </div>
 
@@ -234,7 +260,7 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                 onClick={() => setSubmittedBooking(null)}
                 className="btn-black px-6 py-3 rounded-xl text-xs sm:text-sm font-bold tracking-wide cursor-pointer"
               >
-                Submit Another Request
+                {t('btnSubmitAnother')}
               </button>
             </div>
           </div>
@@ -255,9 +281,9 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
             <div className="p-3 rounded-xl bg-neutral-900 text-white flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Requesting: <strong className="text-yellow-400">{formData.gkName}</strong></span>
+                <span>{lang === 'bn' ? 'অনুরোধ করা হচ্ছে:' : 'Requesting:'} <strong className="text-yellow-400">{formData.gkName}</strong></span>
               </div>
-              <span className="text-neutral-400">Dhaka & Traveling</span>
+              <span className="text-neutral-400">{lang === 'bn' ? 'ঢাকা ও সারা দেশ' : 'Dhaka & Traveling'}</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -265,110 +291,158 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
               {/* Name */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Your Full Name <span className="text-rose-500">*</span>
+                  {t('formLabelName')} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Captain Tanvir Ahmed"
+                  placeholder={t('formPlaceholderName')}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Phone Number */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Phone Number (Call / WhatsApp) <span className="text-rose-500">*</span>
+                  {t('formLabelPhone')} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="tel"
                   required
-                  placeholder="e.g. +880 1712-345678"
+                  placeholder={t('formPlaceholderPhone')}
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Email */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Email Address
+                  {t('formLabelEmail')}
                 </label>
                 <input
                   type="email"
-                  placeholder="e.g. yourteam@example.com"
+                  placeholder={t('formPlaceholderEmail')}
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Team / Club Name */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Team / Club Name
+                  {t('formLabelTeamName')}
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Dhanmondi Strikers FC"
+                  placeholder={t('formPlaceholderTeamName')}
                   value={formData.teamName}
                   onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Match Type */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Match Type <span className="text-rose-500">*</span>
+                  {t('formLabelMatchType')} <span className="text-rose-500">*</span>
                 </label>
                 <select
                   value={formData.matchType}
                   onChange={(e) => setFormData({ ...formData, matchType: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all bg-white"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all bg-white font-sans"
                 >
-                  <option value="Match Booking">Single Match Booking (90 Mins / Turf)</option>
-                  <option value="Tournament Booking">Tournament Booking (Full Day Knockout / League)</option>
-                  <option value="Training Session">Goalkeeper Training Session</option>
-                  <option value="Custom Event">Custom Championship / Outstation Event</option>
-                  <option value="Friendly Match">Friendly / Practice Game</option>
+                  <option value="Match Booking">{lang === 'bn' ? 'একক ম্যাচ বুকিং (৯০ মিনিট / টার্ফ)' : 'Single Match Booking (90 Mins / Turf)'}</option>
+                  <option value="Tournament Booking">{lang === 'bn' ? 'টুর্নামেন্ট বুকিং (সারাদিন নকআউট / লীগ)' : 'Tournament Booking (Full Day Knockout / League)'}</option>
+                  <option value="Training Session">{lang === 'bn' ? 'গোলকিপার ট্রেনিং সেশন' : 'Goalkeeper Training Session'}</option>
+                  <option value="Custom Event">{lang === 'bn' ? 'কাস্টম চ্যাম্পিয়নশিপ / ঢাকার বাইরে খেলা' : 'Custom Event / Outstation Tournament'}</option>
+                  <option value="Friendly Match">{lang === 'bn' ? 'প্রীতি ম্যাচ / প্র্যাকটিস গেম' : 'Friendly Match / Practice Game'}</option>
                 </select>
               </div>
 
               {/* Match Date */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Match Date <span className="text-rose-500">*</span>
+                  {t('formLabelMatchDate')} <span className="text-rose-500">*</span>
                 </label>
                 <input
                   type="date"
                   required
                   value={formData.matchDate}
                   onChange={(e) => setFormData({ ...formData, matchDate: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
+                />
+              </div>
+
+              {/* Division */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
+                  {t('formLabelDivision')} <span className="text-rose-500">*</span>
+                </label>
+                <select
+                  required
+                  value={formData.division}
+                  onChange={(e) => setFormData({ ...formData, division: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all bg-white font-sans"
+                >
+                  <option value="">{lang === 'bn' ? 'বিভাগ নির্বাচন করুন' : 'Select Division'}</option>
+                  {divisionsList.map((div) => (
+                    <option key={div} value={div}>{div}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* District */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
+                  {t('formLabelDistrict')} <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={t('formPlaceholderDistrict')}
+                  value={formData.district}
+                  onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
+                />
+              </div>
+
+              {/* Location */}
+              <div className="space-y-1.5 sm:col-span-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
+                  {t('formLabelLocation')} <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={t('formPlaceholderLocation')}
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Match Time */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Kick-Off Time / Reporting Time
+                  {t('formLabelMatchTime')}
                 </label>
                 <input
                   type="time"
                   value={formData.matchTime}
                   onChange={(e) => setFormData({ ...formData, matchTime: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Number of Matches */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Number of Matches
+                  {t('formLabelMatchesCount')}
                 </label>
                 <input
                   type="number"
@@ -376,36 +450,21 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                   max={10}
                   value={formData.numberOfMatches}
                   onChange={(e) => setFormData({ ...formData, numberOfMatches: Number(e.target.value) })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
               {/* Expected Duration */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Expected Duration
+                  {t('formLabelDuration')}
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. 90 mins or 3 Hours"
+                  placeholder={t('formPlaceholderDuration')}
                   value={formData.expectedDuration}
                   onChange={(e) => setFormData({ ...formData, expectedDuration: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
-                />
-              </div>
-
-              {/* Location */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                  Match Location / Turf / Stadium <span className="text-rose-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Jaff Arena, Bashundhara / Abahani Ground"
-                  value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
                 />
               </div>
 
@@ -414,14 +473,14 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
             {/* Additional Message */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-wider text-neutral-700">
-                Additional Match Notes / Tournament Details
+                {t('formLabelNotes')}
               </label>
               <textarea
                 rows={3}
-                placeholder="Mention squad format (7-a-side / 11-a-side), jersey colors, tournament prize, or special notes..."
+                placeholder={t('formPlaceholderNotes')}
                 value={formData.additionalMessage}
                 onChange={(e) => setFormData({ ...formData, additionalMessage: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all"
+                className="w-full px-4 py-3 rounded-xl border border-neutral-300 text-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 focus:border-neutral-950 transition-all font-sans"
               />
             </div>
 
@@ -438,12 +497,12 @@ export const HiringSection: React.FC<HiringSectionProps> = ({
                 ) : (
                   <>
                     <UserCheck className="w-5 h-5" />
-                    <span>SEND HIRING REQUEST</span>
+                    <span>{t('btnSendRequest')}</span>
                   </>
                 )}
               </button>
-              <p className="text-xs text-neutral-500 text-center mt-3">
-                No immediate payment required. Badhon will review your match timing and reply to confirm.
+              <p className="text-xs text-neutral-500 text-center mt-3 font-sans">
+                {t('noteNoImmediatePayment')}
               </p>
             </div>
 

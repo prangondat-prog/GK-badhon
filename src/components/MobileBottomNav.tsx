@@ -1,5 +1,6 @@
 import React from 'react';
-import { Home, Camera, Tag, Phone } from 'lucide-react';
+import { Home, Camera, Phone } from 'lucide-react';
+import { useTranslation } from './LanguageContext';
 
 interface MobileBottomNavProps {
   onScrollTo: (id: string) => void;
@@ -11,6 +12,8 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   onScrollTo,
   phone,
 }) => {
+  const { lang } = useTranslation();
+
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-neutral-950/95 backdrop-blur-md border-t border-neutral-800 px-3 py-2">
       <div className="flex items-center justify-around flex-nowrap">
@@ -21,18 +24,18 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
           className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white p-1 text-[10px] font-bold uppercase transition-colors cursor-pointer"
         >
           <Home className="w-4 h-4" />
-          <span>Home</span>
+          <span>{lang === 'bn' ? 'হোম' : 'Home'}</span>
         </button>
-
+ 
         {/* Showcase */}
         <button
           onClick={() => onScrollTo('showcase')}
           className="flex flex-col items-center gap-1 text-neutral-400 hover:text-white p-1 text-[10px] font-bold uppercase transition-colors cursor-pointer"
         >
           <Camera className="w-4 h-4" />
-          <span>Showcase</span>
+          <span>{lang === 'bn' ? 'শোকেস' : 'Showcase'}</span>
         </button>
-
+ 
         {/* HIRE BADHON (Centered Prominent Yellow Action with Stylized Letter Icon Badge "B") */}
         <button
           onClick={() => onScrollTo('hiring-section')}
@@ -43,19 +46,19 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             <span>B</span>
           </div>
           <span className="text-[9px] font-extrabold text-[#FFE600] uppercase mt-0.5 tracking-wider">
-            Hire Badhon
+            {lang === 'bn' ? 'হায়ার বাঁধন' : 'Hire Badhon'}
           </span>
         </button>
-
+ 
         {/* Call Now */}
         <a
           href={`tel:${phone || '+8801712345678'}`}
           className="flex flex-col items-center gap-1 text-neutral-400 hover:text-yellow-400 p-1 text-[10px] font-bold uppercase transition-colors cursor-pointer"
         >
           <Phone className="w-4 h-4" />
-          <span>Call</span>
+          <span>{lang === 'bn' ? 'কল' : 'Call'}</span>
         </a>
-
+ 
       </div>
     </div>
   );

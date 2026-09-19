@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
-import { Camera, Maximize2, X, ChevronLeft, ChevronRight, Shield, Award } from 'lucide-react';
+import { Camera, Maximize2, X, ChevronLeft, ChevronRight, Shield } from 'lucide-react';
 import { GalleryItem } from '../types';
+import { useTranslation } from './LanguageContext';
 
 interface PlayerShowcaseProps {
   gallery: GalleryItem[];
 }
 
 export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
+  const { t, lang } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('All');
   const [activeMedia, setActiveMedia] = useState<GalleryItem | null>(null);
 
   const categories = ['All', 'Match Moments', 'Saves', 'Training', 'Tournaments'];
+
+  const getCategoryLabel = (cat: string) => {
+    switch (cat) {
+      case 'All': return t('tagAll');
+      case 'Match Moments': return lang === 'bn' ? 'ম্যাচ মুহূর্ত' : 'Match Moments';
+      case 'Saves': return lang === 'bn' ? 'সেভসমূহ' : 'Saves';
+      case 'Training': return t('tagTraining');
+      case 'Tournaments': return lang === 'bn' ? 'টুর্নামেন্টসমূহ' : 'Tournaments';
+      default: return cat;
+    }
+  };
 
   const filteredItems = activeTab === 'All'
     ? gallery
@@ -41,13 +54,13 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-yellow-100 text-yellow-900 text-xs font-bold uppercase tracking-wider mb-2">
               <Camera className="w-3.5 h-3.5" />
-              <span>Action Archive</span>
+              <span>{lang === 'bn' ? 'অ্যাকশন আর্কাইভ' : 'Action Archive'}</span>
             </div>
             <h2 className="font-heading text-3xl sm:text-5xl font-extrabold text-neutral-950 uppercase tracking-tight">
-              PLAYER SHOWCASE
+              {t('showcaseTitle')}
             </h2>
             <p className="text-base text-neutral-600 font-medium mt-1">
-              Match action, fingertip reflex saves, training drills, and tournament appearances.
+              {t('showcaseSubtitle')}
             </p>
           </div>
 
@@ -63,7 +76,7 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
                     : 'bg-white text-neutral-700 hover:bg-neutral-200/70 border border-neutral-200/80'
                 }`}
               >
-                {cat}
+                {getCategoryLabel(cat)}
               </button>
             ))}
           </div>
@@ -88,7 +101,7 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
 
                 <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur-md text-white text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 border border-white/10">
                   <Shield className="w-3 h-3 text-[#FFE600]" />
-                  <span>{item.category}</span>
+                  <span>{getCategoryLabel(item.category)}</span>
                 </div>
 
                 {/* Hover Maximize Overlay */}
@@ -102,14 +115,14 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
               {/* Card Meta Content */}
               <div className="p-5">
                 <div className="flex items-center justify-between text-xs text-neutral-400 font-semibold mb-1.5">
-                  <span className="text-yellow-600 font-bold uppercase">{item.category}</span>
-                  <span>{item.date || 'Recent Match'}</span>
+                  <span className="text-yellow-600 font-bold uppercase">{getCategoryLabel(item.category)}</span>
+                  <span>{lang === 'bn' && item.date === 'Recent Match' ? 'সাম্প্রতিক ম্যাচ' : (item.date || 'Recent Match')}</span>
                 </div>
                 <h3 className="font-heading text-lg font-bold text-neutral-950 line-clamp-1 group-hover:text-yellow-600 transition-colors">
-                  {item.title}
+                  {lang === 'bn' ? (item.title_bn || item.title) : item.title}
                 </h3>
                 <p className="text-xs text-neutral-600 line-clamp-2 mt-1 leading-relaxed">
-                  {item.description}
+                  {lang === 'bn' ? (item.description_bn || item.description) : item.description}
                 </p>
               </div>
             </div>
@@ -119,7 +132,7 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
         {filteredItems.length === 0 && (
           <div className="text-center py-16 bg-white rounded-2xl border border-neutral-200">
             <Camera className="w-10 h-10 text-neutral-400 mx-auto mb-3" />
-            <p className="text-neutral-600 font-semibold">No items currently under this category.</p>
+            <p className="text-neutral-600 font-semibold">{t('showcaseNoItems')}</p>
           </div>
         )}
 
@@ -174,20 +187,22 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="px-2 py-0.5 rounded bg-[#FFE600] text-black text-[10px] font-extrabold uppercase">
-                    {activeMedia.category}
+                    {getCategoryLabel(activeMedia.category)}
                   </span>
-                  <span className="text-xs text-neutral-400">{activeMedia.date}</span>
+                  <span className="text-xs text-neutral-400">
+                    {lang === 'bn' && activeMedia.date === 'Recent Match' ? 'সাম্প্রতিক ম্যাচ' : (activeMedia.date || 'Recent Match')}
+                  </span>
                 </div>
                 <h3 className="font-heading text-xl font-bold text-white">
-                  {activeMedia.title}
+                  {lang === 'bn' ? (activeMedia.title_bn || activeMedia.title) : activeMedia.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl">
-                  {activeMedia.description}
+                  {lang === 'bn' ? (activeMedia.description_bn || activeMedia.description) : activeMedia.description}
                 </p>
               </div>
 
               <span className="text-xs text-neutral-500 shrink-0">
-                GK Badhon Match Archive
+                {t('showcaseArchive')}
               </span>
             </div>
           </div>
