@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, Maximize2, X, ChevronLeft, ChevronRight, Shield } from 'lucide-react';
+import { Camera, Maximize2, X, ChevronLeft, ChevronRight, Shield, Play } from 'lucide-react';
 import { GalleryItem } from '../types';
 import { useTranslation } from './LanguageContext';
 
@@ -11,6 +11,7 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
   const { t, lang } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>('All');
   const [activeMedia, setActiveMedia] = useState<GalleryItem | null>(null);
+  const [playingVideoId, setPlayingVideoId] = useState<'video1' | 'video2' | null>(null);
 
   const categories = ['All', 'Match Moments', 'Saves', 'Training', 'Tournaments'];
 
@@ -79,6 +80,115 @@ export const PlayerShowcase: React.FC<PlayerShowcaseProps> = ({ gallery }) => {
                 {getCategoryLabel(cat)}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* Featured Vertical Video Highlights (9:16 Ratio Showcase) */}
+        <div className="mb-14 max-w-4xl mx-auto px-2">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#FFE600]/20 text-yellow-900 text-xs font-black uppercase tracking-widest border border-yellow-400">
+              {lang === 'bn' ? 'ম্যাচ হাইলাইটস ও সেভস ভিডিও' : 'Match Highlights & Saves Reels'}
+            </span>
+            <h3 className="font-heading text-2xl sm:text-3xl font-black text-neutral-950 mt-2 uppercase tracking-tight">
+              {lang === 'bn' ? 'ম্যাচ পারফরম্যান্স ও রিফ্লেক্স রিলস' : 'Match Performance & Reflex Reels'}
+            </h3>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1">
+              {lang === 'bn' ? '৯:১৬ হাই-কোয়ালিটি রিল ভিডিওগুলোতে দেখুন বাঁধনের সেরা কিছু সেভ' : 'Watch GK Badhon\'s elite reflex saves captured in high-definition 9:16 vertical reels'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            
+            {/* Reel Video 1 */}
+            <div className="flex flex-col items-center">
+              <div 
+                onClick={() => setPlayingVideoId('video1')}
+                className="w-full max-w-[310px] aspect-[9/16] rounded-3xl overflow-hidden bg-neutral-950 border-4 border-neutral-900 shadow-2xl relative group transform hover:scale-[1.01] transition-transform cursor-pointer"
+              >
+                {playingVideoId === 'video1' ? (
+                  <iframe
+                    src="https://streamable.com/e/2glj4e?autoplay=1"
+                    frameBorder="0"
+                    width="100%"
+                    height="100%"
+                    allowFullScreen
+                    allow="autoplay"
+                    className="absolute top-0 left-0 w-full h-full"
+                    title="GK Badhon - Reflex Saves Reel"
+                  />
+                ) : (
+                  <div className="absolute inset-0 w-full h-full relative">
+                    <img 
+                      src="/src/assets/images/badhon_goalkeeper_hero_1789662074857.jpg" 
+                      alt="GK Badhon - Flying Saves Preview" 
+                      className="w-full h-full object-cover object-center filter brightness-75 group-hover:brightness-50 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-black/20">
+                      <div className="w-16 h-16 rounded-full bg-[#FFE600] text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300">
+                        <Play className="w-7 h-7 fill-current ml-1" />
+                      </div>
+                      <span className="mt-4 text-xs font-black tracking-widest text-white uppercase bg-black/60 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
+                        {lang === 'bn' ? 'চালু করুন' : 'Click to Play'}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="text-center mt-3">
+                <span className="text-[11px] font-bold tracking-wider text-[#FFE600] bg-black px-2.5 py-0.5 rounded-full uppercase">
+                  Reel 1
+                </span>
+                <p className="text-sm font-black text-neutral-900 mt-1">
+                  {lang === 'bn' ? 'ফ্লাইং সেভস এবং রিফ্লেক্স ডেমো' : 'Flying Saves & Reflex Showcase'}
+                </p>
+              </div>
+            </div>
+
+            {/* Reel Video 2 */}
+            <div className="flex flex-col items-center">
+              <div 
+                onClick={() => setPlayingVideoId('video2')}
+                className="w-full max-w-[310px] aspect-[9/16] rounded-3xl overflow-hidden bg-neutral-950 border-4 border-neutral-900 shadow-2xl relative group transform hover:scale-[1.01] transition-transform cursor-pointer"
+              >
+                {playingVideoId === 'video2' ? (
+                  <iframe
+                    src="https://streamable.com/e/oqjg89?autoplay=1"
+                    frameBorder="0"
+                    width="100%"
+                    height="100%"
+                    allowFullScreen
+                    allow="autoplay"
+                    className="absolute top-0 left-0 w-full h-full"
+                    title="GK Badhon - Dive Drills Reel"
+                  />
+                ) : (
+                  <div className="absolute inset-0 w-full h-full relative">
+                    <img 
+                      src="/src/assets/images/badhon_portrait_1789662091328.jpg" 
+                      alt="GK Badhon - Dive Drills Preview" 
+                      className="w-full h-full object-cover object-center filter brightness-75 group-hover:brightness-50 transition-all duration-300"
+                    />
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4 bg-black/20">
+                      <div className="w-16 h-16 rounded-full bg-[#FFE600] text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300">
+                        <Play className="w-7 h-7 fill-current ml-1" />
+                      </div>
+                      <span className="mt-4 text-xs font-black tracking-widest text-white uppercase bg-black/60 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
+                        {lang === 'bn' ? 'চালু করুন' : 'Click to Play'}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="text-center mt-3">
+                <span className="text-[11px] font-bold tracking-wider text-[#FFE600] bg-black px-2.5 py-0.5 rounded-full uppercase">
+                  Reel 2
+                </span>
+                <p className="text-sm font-black text-neutral-900 mt-1">
+                  {lang === 'bn' ? 'ডাইভিং এবং এরিয়াল গ্রিপিং' : 'Diving Clears & Aerial Gripping'}
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
 

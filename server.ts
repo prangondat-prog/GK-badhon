@@ -276,53 +276,8 @@ const defaultDB = {
       category: "Saves",
       url: "/src/assets/images/badhon_goalkeeper_hero_1789662074857.jpg",
       title: "Flying Top-Corner Finger-tip Save",
-      description: "Decisive 89th minute save preserving a 1-0 clean sheet in the Dhaka City League.",
+      description: "Decisive save preserving a clean sheet in the Dhaka City League.",
       date: "Recent Match"
-    },
-    {
-      id: "gal-2",
-      type: "photo",
-      category: "Match Moments",
-      url: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1200&q=80",
-      title: "Organizing The Defensive Wall",
-      description: "Directing the backline ahead of a dangerous free kick outside the penalty box.",
-      date: "League Match"
-    },
-    {
-      id: "gal-3",
-      type: "photo",
-      category: "Tournaments",
-      url: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80",
-      title: "Championship Trophy Celebration",
-      description: "Awarded Best Goalkeeper of the Tournament after conceding only 1 goal across 5 matches.",
-      date: "Winter Championship"
-    },
-    {
-      id: "gal-4",
-      type: "photo",
-      category: "Training",
-      url: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
-      title: "High-Intensity Reflex Drills",
-      description: "Speed ladder and reaction ball training sessions to sharpen diving agility.",
-      date: "Academy Ground"
-    },
-    {
-      id: "gal-5",
-      type: "photo",
-      category: "Saves",
-      url: "https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=80",
-      title: "1v1 Breakthrough Block",
-      description: "Smothering the attacker's breakaway angle with explosive ground coverage.",
-      date: "Knockout Derby"
-    },
-    {
-      id: "gal-6",
-      type: "photo",
-      category: "Match Moments",
-      url: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1200&q=80",
-      title: "Aerial High Catch Command",
-      description: "Rising above opposing attackers on corner kicks to claim the ball securely.",
-      date: "Quarter Final"
     }
   ],
   goalkeepers: [
